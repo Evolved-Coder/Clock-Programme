@@ -1,0 +1,35 @@
+let myLabel = document.getElementById("myLabel"); //retrieves the reference to the HTML element with the ID 'myLabel
+
+function update(){
+    let date = new Date; // the date variable is assigned the current date and time using the Date object
+    myLabel.innerHTML = addTime(); // assign our label to the function that displays the time
+
+    function addTime(hours, minutes, seconds){
+        hours = date.getHours()
+        minutes = date.getMinutes()
+        seconds = date.getSeconds()
+
+        amOrPm = hours >= 12 ? "pm" : "am";  // when hours is greater than or equal to 12 it will return pm else am, thanks to the ternary operator
+
+        hours = hours % 12 || 12;   /*When the hours is less than 3 i will return 3 the first truthy value, when hours is greater than 12
+                                 it will return the remainder so 15 = 3. Lastly when the hours is 12, remainder will be zero which is falsy 
+                                  hours will return the truthy value 12
+        
+                                 */
+
+        hours = addZeroes(hours);
+        minutes = addZeroes(minutes);
+        seconds = addZeroes(seconds);
+
+        return `${hours}:${minutes}:${seconds} ${amOrPm}`
+
+
+    }
+    function addZeroes(time){
+        time = time.toString();  
+       return time.length == 1 ? "0" + time : time; 
+    }    // in the add zeroes function time is equal to time.toString() which is key as it ensures that single-digit time components are padded with a leading zero to maintain consistent formatting
+}
+
+
+setInterval(update, 1000) // After every seconds out time is being updated as it repeats our update function after every seconds
